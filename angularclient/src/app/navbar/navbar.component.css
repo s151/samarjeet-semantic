@@ -4,3 +4,8 @@
 .customIconSize {
   transform: scale(1.5);
 }
+
+a {
+  font-size: medium;
+  padding: 1%;
+}

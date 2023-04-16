@@ -11,6 +11,10 @@ import { DocumentationComponent } from './documentation/documentation.component'
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ManageDatasetComponent } from './manage-dataset/manage-dataset.component';
+import { QueryComponent } from './query/query.component';
+import {MatInputModule} from "@angular/material/input";
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,14 +23,18 @@ import { ManageDatasetComponent } from './manage-dataset/manage-dataset.componen
     DocumentationComponent,
     ContactComponent,
     AboutComponent,
-    ManageDatasetComponent
+    ManageDatasetComponent,
+    QueryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatInputModule,
+    ClipboardModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
