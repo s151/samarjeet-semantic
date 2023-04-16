@@ -5,16 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 import { DocumentationComponent } from './documentation/documentation.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ManageDatasetComponent } from './manage-dataset/manage-dataset.component';
 import { QueryComponent } from './query/query.component';
-import {MatInputModule} from "@angular/material/input";
-import {ClipboardModule} from "@angular/cdk/clipboard";
-import {FormsModule} from "@angular/forms";
+import { MatInputModule } from "@angular/material/input";
+import { ClipboardModule } from "@angular/cdk/clipboard";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {FormsModule} from "@angular/forms";
     MatIconModule,
     MatInputModule,
     ClipboardModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

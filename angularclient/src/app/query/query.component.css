@@ -1,0 +1,28 @@
+.component {
+  padding-top: 5%;
+  padding-left: 5%;
+}
+
+button {
+  font-size: medium;
+  padding: 1%;
+
+}
+
+.buttonRow .mat-mdc-button-base {
+  margin: 16px 8px 8px 8px;
+}
+
+table, th, td {
+  border: 1px solid;
+  padding: 5px 15px;
+  elevation: higher;
+}
+
+.results {
+  padding: 2% 2% 2% 0;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

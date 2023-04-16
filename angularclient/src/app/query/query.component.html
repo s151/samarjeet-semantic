@@ -1,0 +1,35 @@
+<div class="component">
+  <h1>SPARQL Query</h1>
+  <p>Please enter your SPARQL Query below</p>
+
+  <textarea
+    [(ngModel)]="str"
+    cols="80"
+    rows="10"
+    cdkTextareaAutosize
+    cdkAutosizeMaxRows="20">
+  </textarea>
+
+  <div class="buttonRow">
+    <button mat-raised-button color="primary" (click)="processQuery()">Run Query</button>
+    <button mat-raised-button (click)="clear()">Clear</button>
+    <button mat-raised-button [cdkCopyToClipboard]="str">Copy to Clipboard</button>
+  </div>
+
+  <div class="results" style="overflow-x:auto;">
+    <table>
+      <thead>
+      <tr>
+        <th *ngFor="let head of displayedColumns">{{head}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of dataSource">
+        <td *ngFor="let element of row">{{element}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
