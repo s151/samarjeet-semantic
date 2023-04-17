@@ -7,6 +7,7 @@ import {ContactComponent} from "./contact/contact.component";
 import {QueryComponent} from "./query/query.component";
 
 const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch:'full'},
   {path: 'home', component: QueryComponent},
   {path: 'about', component: AboutComponent},
   {path: 'manage-dataset', component: ManageDatasetComponent},
