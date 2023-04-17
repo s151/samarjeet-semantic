@@ -2,6 +2,15 @@
   <h1>SPARQL Query</h1>
   <p>Please enter your SPARQL Query below</p>
 
+  <div>
+    <mat-form-field appearance="fill" style="width: 30%">
+      <mat-label>Sample Queries</mat-label>
+      <mat-select [formControl]="queriesControl" (selectionChange)="selectQuery()">
+        <mat-option *ngFor="let question of questionList" [value]="queryList.get(question)">{{question}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <textarea
     [(ngModel)]="str"
     cols="80"

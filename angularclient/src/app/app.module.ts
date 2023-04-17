@@ -14,8 +14,10 @@ import { ManageDatasetComponent } from './manage-dataset/manage-dataset.componen
 import { QueryComponent } from './query/query.component';
 import { MatInputModule } from "@angular/material/input";
 import { ClipboardModule } from "@angular/cdk/clipboard";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
+import {MatSelectModule} from "@angular/material/select";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     ClipboardModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
