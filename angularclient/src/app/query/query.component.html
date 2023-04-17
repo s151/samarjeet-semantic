@@ -22,10 +22,11 @@
   <div class="buttonRow">
     <button mat-raised-button color="primary" (click)="processQuery()">Run Query</button>
     <button mat-raised-button (click)="clear()">Clear</button>
-    <button mat-raised-button [cdkCopyToClipboard]="str">Copy to Clipboard</button>
+    <button mat-raised-button [cdkCopyToClipboard]="str">Copy Query</button>
   </div>
 
   <div class="results" style="overflow-x:auto;">
+    <p *ngIf="dataSource !=undefined">{{dataSource.length}} results found.</p>
     <table>
       <thead>
       <tr>
