@@ -26,6 +26,8 @@ export class QueryComponent {
 
   constructQueryResponse:string | undefined;
 
+  describeQueryResponse:string | undefined;
+
   queriesControl = new FormControl([]);
 
   queryList: QueryData[] = [];
@@ -70,6 +72,7 @@ export class QueryComponent {
         this.askQueryResponse = res;
         break;
       case "describe":
+        this.describeQueryResponse = res;
         break;
       case "construct":
         this.constructQueryResponse = res;
@@ -88,6 +91,7 @@ export class QueryComponent {
     this.dataSource = undefined;
     this.askQueryResponse = undefined;
     this.constructQueryResponse = undefined;
+    this.describeQueryResponse = undefined;
   }
 
   selectQueryFromDropdown() {

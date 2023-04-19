@@ -57,4 +57,9 @@
     <p>See response below:</p>
     <p style="padding-left: 5%">{{constructQueryResponse}}</p>
   </div>
+
+  <div class="results" *ngIf="queryType=='describe' && describeQueryResponse != undefined">
+    <p>See response below:</p>
+    <p style="padding-left: 5%">{{describeQueryResponse}}</p>
+  </div>
 </div>
