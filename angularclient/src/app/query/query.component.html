@@ -34,8 +34,8 @@
     <button mat-raised-button [cdkCopyToClipboard]="str">Copy Query</button>
   </div>
 
-  <div class="results" style="overflow-x:auto;">
-    <p *ngIf="dataSource !=undefined">{{dataSource.length}} results found.</p>
+  <div class="results" *ngIf="queryType=='select'">
+    <p *ngIf="dataSource != undefined">{{dataSource.length}} results found.</p>
     <table>
       <thead>
       <tr>
@@ -48,5 +48,8 @@
       </tr>
       </tbody>
     </table>
+  </div>
+  <div class="results" *ngIf="queryType=='ask' && askQueryResponse != undefined">
+    <p>The answer is: {{askQueryResponse}}.</p>
   </div>
 </div>

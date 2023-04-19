@@ -18,7 +18,7 @@ public class RDFHelperImpl implements RDFHelper {
         model.read(AppConstants.OWL_FILE_NAME, "RDF/XML");
     }
 
-    public SelectQueryResponseDTO getResultsFromQuery(String queryString) {
+    public SelectQueryResponseDTO processSelectQuery(String queryString) {
         SelectQueryResponseDTO responseDTO = new SelectQueryResponseDTO();
 
         try (QueryExecution queryExecution = QueryExecutionFactory.create(queryString, model)) {
@@ -35,5 +35,11 @@ public class RDFHelperImpl implements RDFHelper {
         }
 
         return responseDTO;
+    }
+
+    public Boolean processAskQuery(String queryString) {
+        try (QueryExecution queryExecution = QueryExecutionFactory.create(queryString, model)) {
+            return queryExecution.execAsk();
+        }
     }
 }

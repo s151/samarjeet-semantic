@@ -20,6 +20,7 @@ table, th, td {
 }
 
 .results {
+  overflow-x:auto;
   padding: 2% 2% 2% 0;
 }
 

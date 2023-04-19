@@ -4,6 +4,8 @@ import com.semanticdataquery.DTO.SelectQueryResponseDTO;
 
 public interface RDFHelper {
 
-    SelectQueryResponseDTO getResultsFromQuery(String queryString);
+    SelectQueryResponseDTO processSelectQuery(String queryString);
+
+    Boolean processAskQuery(String queryString);
 
 }

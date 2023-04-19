@@ -21,6 +21,8 @@ export class QueryComponent {
 
   dataSource:string[][] | undefined;
 
+  askQueryResponse:boolean | undefined;
+
   queriesControl = new FormControl([]);
 
   queryList: QueryData[] = [];
@@ -33,28 +35,42 @@ export class QueryComponent {
 
   processQuery() {
     if (this.str.replaceAll(" ", "") != "") {
-      let requestBody = {
-        queryType: this.queryType,
-        value: this.str
-      }
-      this.httpClient.post<any>("http://localhost:8080/query", requestBody).subscribe(
+      this.httpClient.post<any>("http://localhost:8080/query/" + this.queryType, this.str).subscribe(
         res => {
-          this.displayedColumns = res.headers;
-          this.dataSource = res.data;
+          this.displayQueryResponse(res);
         }
       );
+    }
+  }
+
+  displayQueryResponse(res: any) {
+    switch(this.queryType) {
+      case "select":
+        this.displayedColumns = res.headers;
+        this.dataSource = res.data;
+        break;
+      case "ask":
+        this.askQueryResponse = res;
+        break;
+      case "describe":
+      case "construct":
     }
   }
 
   clear() {
     this.str = "";
     this.queryType = undefined;
-    this.displayedColumns = undefined;
-    this.dataSource = undefined;
     this.queriesControl.reset();
   }
 
+  clearResults() {
+    this.displayedColumns = undefined;
+    this.dataSource = undefined;
+    this.askQueryResponse = undefined;
+  }
+
   selectQueryFromDropdown() {
+    this.clearResults();
     this.queryType = this.selectedQuery.queryType;
     this.str = this.selectedQuery.query;
   }
