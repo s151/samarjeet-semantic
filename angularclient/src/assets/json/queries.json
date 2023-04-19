@@ -14,6 +14,11 @@
       "queryType": "select",
       "question": "No of crimes in each area per year",
       "query": "PREFIX ns: <https://data.lacity.org#>\n                \nSELECT ?year ?area (COUNT(?crimeType) AS ?numCrimes)\nWHERE {\n  ?crime ns:inArea ?neighborhood;\n         ns:crimeOccurred ?crimeType;\n         ns:reportedOn ?date;\n         BIND(YEAR(?date) AS ?year).\n  ?neighborhood ns:areaDescription ?area.\n}\nGROUP BY ?year ?area\nORDER BY ?year ?area"
+    },
+    {
+      "queryType": "ask",
+      "question": "Sample ASK",
+      "query": "ASK { ?s ?p \"Van Nuys\" }"
     }
   ]
 }
