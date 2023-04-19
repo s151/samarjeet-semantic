@@ -52,4 +52,9 @@
   <div class="results" *ngIf="queryType=='ask' && askQueryResponse != undefined">
     <p>The answer is: {{askQueryResponse}}.</p>
   </div>
+
+  <div class="results" *ngIf="queryType=='construct' && constructQueryResponse != undefined">
+    <p>See response below:</p>
+    <p style="padding-left: 5%">{{constructQueryResponse}}</p>
+  </div>
 </div>

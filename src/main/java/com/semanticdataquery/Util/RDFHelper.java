@@ -1,7 +1,6 @@
 package com.semanticdataquery.Util;
 
 import com.semanticdataquery.DTO.SelectQueryResponseDTO;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.http.ResponseEntity;
 
 public interface RDFHelper {
@@ -10,6 +9,8 @@ public interface RDFHelper {
 
     ResponseEntity<Boolean> processAskQuery(String queryString);
 
-    Boolean processAskQuery(String queryString);
+    ResponseEntity<String> processConstructQuery(String queryString);
+
+//    ResponseEntity<String> processDescribeQuery(String queryString);
 
 }

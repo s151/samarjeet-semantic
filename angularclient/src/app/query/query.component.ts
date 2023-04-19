@@ -24,6 +24,8 @@ export class QueryComponent {
 
   askQueryResponse:boolean | undefined;
 
+  constructQueryResponse:string | undefined;
+
   queriesControl = new FormControl([]);
 
   queryList: QueryData[] = [];
@@ -34,9 +36,16 @@ export class QueryComponent {
     });
   }
 
+  getOptions() {
+    if (this.queryType == 'construct' || this.queryType == 'describe') {
+      return "text";
+    } else return "json";
+  }
+
   processQuery() {
     if (this.str.replaceAll(" ", "") != "") {
-      this.httpClient.post<any>("http://localhost:8080/query/" + this.queryType, this.str).subscribe(
+      // @ts-ignore
+      this.httpClient.post("http://localhost:8080/query/" + this.queryType, this.str, {responseType: this.getOptions()}).subscribe(
         res => {
           this.displayQueryResponse(res);
         },
@@ -61,13 +70,16 @@ export class QueryComponent {
         this.askQueryResponse = res;
         break;
       case "describe":
+        break;
       case "construct":
+        this.constructQueryResponse = res;
     }
   }
 
   clear() {
     this.str = "";
     this.queryType = undefined;
+    this.clearResults();
     this.queriesControl.reset();
   }
 
@@ -75,6 +87,7 @@ export class QueryComponent {
     this.displayedColumns = undefined;
     this.dataSource = undefined;
     this.askQueryResponse = undefined;
+    this.constructQueryResponse = undefined;
   }
 
   selectQueryFromDropdown() {

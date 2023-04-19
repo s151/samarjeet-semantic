@@ -3,7 +3,6 @@ package com.semanticdataquery.Controller;
 import com.semanticdataquery.DTO.SelectQueryResponseDTO;
 import com.semanticdataquery.Util.Impl.RDFHelperImpl;
 import com.semanticdataquery.Util.RDFHelper;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,4 +22,14 @@ public class RDFController {
     public ResponseEntity<Boolean> processAskQuery(@RequestBody String queryString) {
         return rdfHelper.processAskQuery(queryString);
     }
+
+    @PostMapping("/construct")
+    public ResponseEntity<String> processConstructQuery(@RequestBody String queryString) {
+        return rdfHelper.processConstructQuery(queryString);
+    }
+
+//    @PostMapping("/describe")
+//    public ResponseEntity<String> processDescribeQuery(@RequestBody String queryString) {
+//        return rdfHelper.processDescribeQuery(queryString);
+//    }
 }

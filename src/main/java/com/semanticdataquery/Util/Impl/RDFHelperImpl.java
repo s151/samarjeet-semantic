@@ -9,6 +9,7 @@ import org.apache.jena.rdf.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,4 +54,29 @@ public class RDFHelperImpl implements RDFHelper {
             return new ResponseEntity<>(queryExecution.execAsk(), HttpStatus.OK);
         }
     }
+
+    public ResponseEntity<String> processConstructQuery(String queryString) {
+        Query query = QueryFactory.create(queryString);
+        if (!query.isConstructType()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
+            Model results = queryExecution.execConstruct();
+            StringWriter sw = new StringWriter();
+            try (BufferedWriter out = new BufferedWriter(sw)) {
+                results.write(out);
+                out.flush();
+                return new ResponseEntity<>(sw.toString(), HttpStatus.OK);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+//    public ResponseEntity<String> processDescribeQuery(String queryString) {
+//        try (QueryExecution queryExecution = QueryExecutionFactory.create(queryString, model)) {
+//            return queryExecution.execDescribe();
+//        }
+//    }
 }
