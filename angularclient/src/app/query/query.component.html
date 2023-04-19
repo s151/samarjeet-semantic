@@ -5,10 +5,19 @@
   <div>
     <mat-form-field appearance="fill" style="width: 30%">
       <mat-label>Sample Queries</mat-label>
-      <mat-select [formControl]="queriesControl" (selectionChange)="selectQuery()">
-        <mat-option *ngFor="let question of questionList" [value]="queryList.get(question)">{{question}}</mat-option>
+      <mat-select [formControl]="queriesControl" [(value)]="selectedQuery" (selectionChange)="selectQueryFromDropdown()">
+          <mat-option *ngFor="let queryData of queryList" [value]="queryData">{{queryData.question}}</mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+
+  <div>
+    <mat-button-toggle-group name="queryType" [(value)]="queryType">
+      <mat-button-toggle value="select">SELECT</mat-button-toggle>
+      <mat-button-toggle value="ask">ASK</mat-button-toggle>
+      <mat-button-toggle value="describe">DESCRIBE</mat-button-toggle>
+      <mat-button-toggle value="construct">CONSTRUCT</mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
 
   <textarea
@@ -40,6 +49,4 @@
       </tbody>
     </table>
   </div>
-
-
 </div>

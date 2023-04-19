@@ -1,0 +1,19 @@
+{
+  "queryList": [
+    {
+      "queryType": "select",
+      "question": "Name of Area in descending order of total no of crimes",
+      "query": "PREFIX ns: <https://data.lacity.org#>\n\nSELECT ?area (COUNT(?crimeType) AS ?totalCrimes)\nWHERE {\n  ?crime ns:inArea ?neighborhood ;\n         ns:crimeOccurred ?crimeType .\n  ?neighborhood ns:areaDescription ?area;\n}\nGROUP BY ?area\nORDER BY DESC(?totalCrimes)"
+    },
+    {
+      "queryType": "select",
+      "question": "Number of crimes of each crimeType in each area",
+      "query": "PREFIX ns: <https://data.lacity.org#>\n                \nSELECT ?area ?crimeDesc (COUNT(?crimeType) AS ?totalCrimes)\nWHERE {\n  ?crime ns:inArea ?neighborhood;\n         ns:crimeOccurred ?crimeType.\n  ?neighborhood ns:areaDescription ?area.\n  ?crimeType ns:crimeDescription ?crimeDesc;\n}\nGROUP BY ?area ?crimeDesc\nORDER BY DESC(?totalCrimes)"
+    },
+    {
+      "queryType": "select",
+      "question": "No of crimes in each area per year",
+      "query": "PREFIX ns: <https://data.lacity.org#>\n                \nSELECT ?year ?area (COUNT(?crimeType) AS ?numCrimes)\nWHERE {\n  ?crime ns:inArea ?neighborhood;\n         ns:crimeOccurred ?crimeType;\n         ns:reportedOn ?date;\n         BIND(YEAR(?date) AS ?year).\n  ?neighborhood ns:areaDescription ?area.\n}\nGROUP BY ?year ?area\nORDER BY ?year ?area"
+    }
+  ]
+}
