@@ -28,8 +28,8 @@ public class RDFController {
         return rdfHelper.processConstructQuery(queryString);
     }
 
-//    @PostMapping("/describe")
-//    public ResponseEntity<String> processDescribeQuery(@RequestBody String queryString) {
-//        return rdfHelper.processDescribeQuery(queryString);
-//    }
+    @PostMapping("/describe")
+    public ResponseEntity<String> processDescribeQuery(@RequestBody String queryString) {
+        return rdfHelper.processDescribeQuery(queryString);
+    }
 }

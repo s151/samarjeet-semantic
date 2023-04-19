@@ -11,6 +11,6 @@ public interface RDFHelper {
 
     ResponseEntity<String> processConstructQuery(String queryString);
 
-//    ResponseEntity<String> processDescribeQuery(String queryString);
+    ResponseEntity<String> processDescribeQuery(String queryString);
 
 }

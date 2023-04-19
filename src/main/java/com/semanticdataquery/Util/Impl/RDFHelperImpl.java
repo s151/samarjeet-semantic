@@ -63,20 +63,30 @@ public class RDFHelperImpl implements RDFHelper {
 
         try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
             Model results = queryExecution.execConstruct();
-            StringWriter sw = new StringWriter();
-            try (BufferedWriter out = new BufferedWriter(sw)) {
-                results.write(out);
-                out.flush();
-                return new ResponseEntity<>(sw.toString(), HttpStatus.OK);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            return new ResponseEntity<>(getResultStringFromModel(results), HttpStatus.OK);
         }
     }
 
-//    public ResponseEntity<String> processDescribeQuery(String queryString) {
-//        try (QueryExecution queryExecution = QueryExecutionFactory.create(queryString, model)) {
-//            return queryExecution.execDescribe();
-//        }
-//    }
+    public ResponseEntity<String> processDescribeQuery(String queryString) {
+        Query query = QueryFactory.create(queryString);
+        if (!query.isDescribeType()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
+            Model results = queryExecution.execDescribe();
+            return new ResponseEntity<>(getResultStringFromModel(results), HttpStatus.OK);
+        }
+    }
+
+    private String getResultStringFromModel(Model model) {
+        StringWriter sw = new StringWriter();
+        try (BufferedWriter out = new BufferedWriter(sw)) {
+            model.write(out);
+            out.flush();
+            return sw.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
