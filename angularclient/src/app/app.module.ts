@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from "@angular/material/select";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     MatSelectModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

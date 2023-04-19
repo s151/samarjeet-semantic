@@ -3,6 +3,8 @@ package com.semanticdataquery.Controller;
 import com.semanticdataquery.DTO.SelectQueryResponseDTO;
 import com.semanticdataquery.Util.Impl.RDFHelperImpl;
 import com.semanticdataquery.Util.RDFHelper;
+import org.apache.jena.rdf.model.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,12 +15,12 @@ public class RDFController {
     RDFHelper rdfHelper = new RDFHelperImpl();
 
     @PostMapping("/select")
-    public SelectQueryResponseDTO processSelectQuery(@RequestBody String queryString) {
+    public ResponseEntity<SelectQueryResponseDTO> processSelectQuery(@RequestBody String queryString) {
         return rdfHelper.processSelectQuery(queryString);
     }
 
     @PostMapping("/ask")
-    public Boolean processAskQuery(@RequestBody String queryString) {
+    public ResponseEntity<Boolean> processAskQuery(@RequestBody String queryString) {
         return rdfHelper.processAskQuery(queryString);
     }
 }

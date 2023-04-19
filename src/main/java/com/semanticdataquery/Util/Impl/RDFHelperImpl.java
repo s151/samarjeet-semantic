@@ -6,6 +6,8 @@ import com.semanticdataquery.Util.RDFHelper;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,15 @@ public class RDFHelperImpl implements RDFHelper {
         model.read(AppConstants.OWL_FILE_NAME, "RDF/XML");
     }
 
-    public SelectQueryResponseDTO processSelectQuery(String queryString) {
+    public ResponseEntity<SelectQueryResponseDTO> processSelectQuery(String queryString) {
         SelectQueryResponseDTO responseDTO = new SelectQueryResponseDTO();
 
-        try (QueryExecution queryExecution = QueryExecutionFactory.create(queryString, model)) {
+        Query query = QueryFactory.create(queryString);
+        if (!query.isSelectType()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
+
             ResultSet results = queryExecution.execSelect();
             responseDTO.setHeaders(results.getResultVars());
             while (results.hasNext()) {
@@ -34,12 +41,16 @@ public class RDFHelperImpl implements RDFHelper {
             }
         }
 
-        return responseDTO;
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    public Boolean processAskQuery(String queryString) {
-        try (QueryExecution queryExecution = QueryExecutionFactory.create(queryString, model)) {
-            return queryExecution.execAsk();
+    public ResponseEntity<Boolean> processAskQuery(String queryString) {
+        Query query = QueryFactory.create(queryString);
+        if (!query.isAskType()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        try (QueryExecution queryExecution = QueryExecutionFactory.create(query, model)) {
+            return new ResponseEntity<>(queryExecution.execAsk(), HttpStatus.OK);
         }
     }
 }
