@@ -11,7 +11,7 @@ import { DocumentationComponent } from './documentation/documentation.component'
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ManageDatasetComponent } from './manage-dataset/manage-dataset.component';
-import { QueryComponent } from './query/query.component';
+import {QueryComponent, XmlPipe} from './query/query.component';
 import { MatInputModule } from "@angular/material/input";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -29,7 +29,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     ContactComponent,
     AboutComponent,
     ManageDatasetComponent,
-    QueryComponent
+    QueryComponent,
+    XmlPipe
   ],
   imports: [
     BrowserModule,

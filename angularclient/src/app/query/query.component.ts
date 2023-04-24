@@ -2,6 +2,17 @@ import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormControl} from "@angular/forms";
 import {MatSnackBar} from '@angular/material/snack-bar';
+import * as vkbeautify from 'vkbeautify';
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({
+  name: 'xml'
+})
+export class XmlPipe implements PipeTransform {
+  transform(value: string): string {
+    return vkbeautify.xml(value);
+  }
+}
 
 @Component({
   selector: 'app-query',

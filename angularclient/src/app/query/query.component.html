@@ -58,12 +58,12 @@
   <!--todo: pretty-print XML-->
   <div class="results" *ngIf="queryType=='construct' && constructQueryResponse != undefined">
     <p>See response below:</p>
-    <p style="padding-left: 5%">{{constructQueryResponse}}</p>
+    <pre style="padding-left: 5%">{{constructQueryResponse | xml}}</pre>
   </div>
 
   <!--todo: pretty-print XML-->
   <div class="results" *ngIf="queryType=='describe' && describeQueryResponse != undefined">
     <p>See response below:</p>
-    <p style="padding-left: 5%">{{describeQueryResponse}}</p>
+    <pre style="padding-left: 5%">{{describeQueryResponse | xml}}</pre>
   </div>
 </div>
