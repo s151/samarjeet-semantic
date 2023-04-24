@@ -5,6 +5,7 @@
   <div>
     <mat-form-field appearance="fill" style="width: 40%">
       <mat-label>Sample Queries</mat-label>
+      <!--populate the queries from queries.json-->
       <mat-select [formControl]="queriesControl" [(value)]="selectedQuery" (selectionChange)="selectQueryFromDropdown()">
           <mat-option *ngFor="let queryData of queryList" [value]="queryData">{{queryData.question}}</mat-option>
       </mat-select>
@@ -25,7 +26,8 @@
     cols="80"
     rows="10"
     cdkTextareaAutosize
-    cdkAutosizeMaxRows="20">
+    cdkAutosizeMaxRows="20"
+  (ngModelChange)="queriesControl.reset();">
   </textarea>
 
   <div class="buttonRow">
@@ -53,11 +55,13 @@
     <p>The answer is: {{askQueryResponse}}.</p>
   </div>
 
+  <!--todo: pretty-print XML-->
   <div class="results" *ngIf="queryType=='construct' && constructQueryResponse != undefined">
     <p>See response below:</p>
     <p style="padding-left: 5%">{{constructQueryResponse}}</p>
   </div>
 
+  <!--todo: pretty-print XML-->
   <div class="results" *ngIf="queryType=='describe' && describeQueryResponse != undefined">
     <p>See response below:</p>
     <p style="padding-left: 5%">{{describeQueryResponse}}</p>

@@ -33,6 +33,7 @@ export class QueryComponent {
   queryList: QueryData[] = [];
 
   constructor(private httpClient: HttpClient, public snackBar: MatSnackBar) {
+    // fetch queries from queries.json to display in the "Sample Queries" dropdown
     this.httpClient.get<any>('assets/json/queries.json').subscribe((res) => {
       this.queryList = res.queryList;
     });
@@ -45,6 +46,7 @@ export class QueryComponent {
   }
 
   processQuery() {
+    // we don't want to make API calls when the query textbox is empty/only has spaces
     if (this.str.replaceAll(" ", "") != "") {
       // @ts-ignore
       this.httpClient.post("http://localhost:8080/query/" + this.queryType, this.str, {responseType: this.getOptions()}).subscribe(
@@ -52,6 +54,8 @@ export class QueryComponent {
           this.displayQueryResponse(res);
         },
         error => {
+          // response 400 is returned when the given query and the selected queryType do not match
+          // response 500 is returned when there are syntactical errors in the given query
           let errorMessage = (error.status == '400') ? "Query and type mismatch" : "Invalid Query. Please check your SPARQL Query";
           this.snackBar.open(errorMessage, '', {
             duration: 3000,

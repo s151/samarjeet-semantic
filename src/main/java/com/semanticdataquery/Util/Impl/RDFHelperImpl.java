@@ -15,11 +15,14 @@ import java.util.List;
 
 public class RDFHelperImpl implements RDFHelper {
 
+    // create model
     static Model model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 
     static {
+        // read crime RDF datasets into model
         model.read(AppConstants.CRIME_RDF_FILE_1, "RDF/XML");
         model.add(model.read(AppConstants.CRIME_RDF_FILE_2, "RDF/XML"));
+        // read housing OWL datasets into model
         model.add(model.read(AppConstants.HOUSING_OWL_FILE, "RDF/XML"));
     }
 
@@ -27,6 +30,7 @@ public class RDFHelperImpl implements RDFHelper {
         SelectQueryResponseDTO responseDTO = new SelectQueryResponseDTO();
 
         Query query = QueryFactory.create(queryString);
+        // check if the given query is of select type, otherwise return 400
         if (!query.isSelectType()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -34,6 +38,7 @@ public class RDFHelperImpl implements RDFHelper {
 
             ResultSet results = queryExecution.execSelect();
             responseDTO.setHeaders(results.getResultVars());
+            // iterate through the query results and add to the responseDTO
             while (results.hasNext()) {
                 List<String> row = new ArrayList<>();
                 QuerySolution qs = results.nextSolution();
@@ -49,6 +54,7 @@ public class RDFHelperImpl implements RDFHelper {
 
     public ResponseEntity<Boolean> processAskQuery(String queryString) {
         Query query = QueryFactory.create(queryString);
+        // check if the given query is of ask type, otherwise return 400
         if (!query.isAskType()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -59,6 +65,7 @@ public class RDFHelperImpl implements RDFHelper {
 
     public ResponseEntity<String> processConstructQuery(String queryString) {
         Query query = QueryFactory.create(queryString);
+        // check if the given query is of construct type, otherwise return 400
         if (!query.isConstructType()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -71,6 +78,7 @@ public class RDFHelperImpl implements RDFHelper {
 
     public ResponseEntity<String> processDescribeQuery(String queryString) {
         Query query = QueryFactory.create(queryString);
+        // check if the given query is of describe type, otherwise return 400
         if (!query.isDescribeType()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -81,6 +89,11 @@ public class RDFHelperImpl implements RDFHelper {
         }
     }
 
+
+    /**
+     * @param model - results from describe/construct query
+     * @return String - model in RDF/XML format
+     */
     private String getResultStringFromModel(Model model) {
         StringWriter sw = new StringWriter();
         try (BufferedWriter out = new BufferedWriter(sw)) {

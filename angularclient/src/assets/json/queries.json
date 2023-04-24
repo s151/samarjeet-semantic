@@ -12,7 +12,7 @@
     },
     {
       "queryType": "describe",
-      "question": "DESCRIBE Question",
+      "question": "What are the details of the crime that occurred in the Central area on the sidewalk and involved a pistol, and what is the corresponding housing information for the same region?\"",
       "query": "PREFIX cds: <https://data.lacity.org/resource/>\nPREFIX hds: <https://www.zillow.com/research/data#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nDESCRIBE ?crime\nWHERE {\n  ?crime rdf:type cds:CrimeRecord .\n  ?housing rdf:type hds:HousingRecord .\n  ?crime cds:area_name ?location .\n  ?crime cds:weapon_desc ?weaponDesc .\n  ?crime cds:premis_desc ?premiseDesc .\n  ?housing hds:inRegion ?location .\n  FILTER regex(?premiseDesc, \"SIDEWALK\", \"i\") .\n  FILTER regex(?weaponDesc, \"PISTOL\", \"i\") .\n  FILTER regex(?location, \"Central\", \"i\") .\n}"
     },
     {
