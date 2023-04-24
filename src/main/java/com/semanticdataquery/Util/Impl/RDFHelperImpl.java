@@ -18,7 +18,8 @@ public class RDFHelperImpl implements RDFHelper {
     static Model model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 
     static {
-        model.read(AppConstants.CRIME_RDF_FILE, "RDF/XML");
+        model.read(AppConstants.CRIME_RDF_FILE_1, "RDF/XML");
+        model.add(model.read(AppConstants.CRIME_RDF_FILE_2, "RDF/XML"));
         model.add(model.read(AppConstants.HOUSING_OWL_FILE, "RDF/XML"));
     }
 
