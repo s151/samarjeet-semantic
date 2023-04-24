@@ -2,23 +2,23 @@
   "queryList": [
     {
       "queryType": "select",
-      "question": "Name of Area in descending order of total no of crimes",
-      "query": "PREFIX ns: <https://data.lacity.org#>\n\nSELECT ?area (COUNT(?crimeType) AS ?totalCrimes)\nWHERE {\n  ?crime ns:inArea ?neighborhood ;\n         ns:crimeOccurred ?crimeType .\n  ?neighborhood ns:areaDescription ?area;\n}\nGROUP BY ?area\nORDER BY DESC(?totalCrimes)"
+      "question": "Top 5 Areas in Los Angeles with highest average HPI and number of crimes in descending order",
+      "query": "PREFIX cds: <https://data.lacity.org/resource/>\nPREFIX hds: <https://www.zillow.com/research/data#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n\nSELECT ?area (AVG(?price) AS ?avgPrice) (count(distinct ?crimeType) as ?count) ?year\nWHERE {\n?crime rdf:type cds:CrimeRecord;\n\tcds:area_name ?area ;\n\tcds:crm_cd_desc ?crimeType;\n\tcds:date_rptd ?date.\n?housing rdf:type hds:HousingRecord;\n\thds:hasHPI ?price;\n\thds:inRegion ?area;\n\thds:onDate ?dateTime;\n\tBIND(STR(YEAR(?dateTime)) AS ?year)\n\tFILTER(REGEX(?date, ?year) &&\n\t?year = \"2020\").\n}\nGROUP BY ?area ?year\nORDER BY DESC(?count) DESC(?avgPrice)\nLIMIT 5"
     },
     {
       "queryType": "select",
-      "question": "Number of crimes of each crimeType in each area",
-      "query": "PREFIX ns: <https://data.lacity.org#>\n                \nSELECT ?area ?crimeDesc (COUNT(?crimeType) AS ?totalCrimes)\nWHERE {\n  ?crime ns:inArea ?neighborhood;\n         ns:crimeOccurred ?crimeType.\n  ?neighborhood ns:areaDescription ?area.\n  ?crimeType ns:crimeDescription ?crimeDesc;\n}\nGROUP BY ?area ?crimeDesc\nORDER BY DESC(?totalCrimes)"
+      "question": "Which area and in which premise, are most open cases in?",
+      "query": "PREFIX cds: <https://data.lacity.org/resource/>\n                \nSELECT ?area  ?premiseDesc (COUNT(?statusDesc) as ?count)\nWHERE {\n  ?crime cds:area_name ?area;\n         cds:crm_cd ?crimeType;\n         cds:premis_desc ?premiseDesc;\n         cds:status_desc ?statusDesc;\n         cds:date_rptd ?date.\n         BIND(SUBSTR(?date,0,5) AS ?year).\n         FILTER(REGEX(?statusDesc, \"Invest Cont\")).\n         \n}\nGROUP BY ?area ?premiseDesc\nORDER BY DESC(?count)"
     },
     {
-      "queryType": "select",
-      "question": "No of crimes in each area per year",
-      "query": "PREFIX ns: <https://data.lacity.org#>\n                \nSELECT ?year ?area (COUNT(?crimeType) AS ?numCrimes)\nWHERE {\n  ?crime ns:inArea ?neighborhood;\n         ns:crimeOccurred ?crimeType;\n         ns:reportedOn ?date;\n         BIND(YEAR(?date) AS ?year).\n  ?neighborhood ns:areaDescription ?area.\n}\nGROUP BY ?year ?area\nORDER BY ?year ?area"
+      "queryType": "describe",
+      "question": "DESCRIBE Question",
+      "query": "PREFIX cds: <https://data.lacity.org/resource/>\nPREFIX hds: <https://www.zillow.com/research/data#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nDESCRIBE ?crime\nWHERE {\n  ?crime rdf:type cds:CrimeRecord .\n  ?housing rdf:type hds:HousingRecord .\n  ?crime cds:area_name ?location .\n  ?crime cds:weapon_desc ?weaponDesc .\n  ?crime cds:premis_desc ?premiseDesc .\n  ?housing hds:inRegion ?location .\n  FILTER regex(?premiseDesc, \"SIDEWALK\", \"i\") .\n  FILTER regex(?weaponDesc, \"PISTOL\", \"i\") .\n  FILTER regex(?location, \"Central\", \"i\") .\n}"
     },
     {
       "queryType": "ask",
-      "question": "Sample ASK",
-      "query": "ASK { ?s ?p \"Van Nuys\" }"
+      "question": "Is there a correlation between high housing prices and crimes involving weapons in certain areas, specifically when the victim is aged 25 or younger and the weapon used is the same in another crime in the same city and state with a lower housing price?",
+      "query": "PREFIX cds: <https://data.lacity.org/resource/>\nPREFIX hds: <https://www.zillow.com/research/data#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nASK {\n  # Check if there is a crime with a weapon used and a victim aged 25 or younger\n  ?crime rdf:type cds:CrimeRecord ;\n         cds:vict_age ?victAge ;\n         cds:weapon_desc ?weaponUsed ;\n         cds:area_name ?areaName .\n\n  FILTER(xsd:integer(?victAge) > 25 && ?weaponUsed != \"\")\n\n  # Check if there is a housing area with a high average house price in the same region as the crime\n  ?housing rdf:type hds:HousingRecord ;\n           hds:hasHPI ?housePrice ;\n           hds:inRegion ?areaName ;\n           hds:onDate ?onDate .\n\n  FILTER(?housePrice > 800000)\n\n  # Check if there is another housing area in the same city and state as the high-priced area\n  ?otherHousing rdf:type hds:HousingRecord ;\n                hds:hasHPI ?otherHousePrice ;\n                hds:inCity ?city ;\n                hds:inState ?state ;\n                hds:onDate ?onDate .\n\n  FILTER(?otherHousePrice < 500000)\n\n  # Check if there is another crime in the same city and state as the high-priced area with a similar weapon used\n  ?otherCrime rdf:type cds:CrimeRecord ;\n              cds:weapon_desc ?weaponUsed ;\n              cds:area_name ?areaName .\n\n  FILTER(?otherCrime != ?crime)\n}"
     }
   ]
 }

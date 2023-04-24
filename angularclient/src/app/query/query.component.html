@@ -3,7 +3,7 @@
   <p>Please enter your SPARQL Query below</p>
 
   <div>
-    <mat-form-field appearance="fill" style="width: 30%">
+    <mat-form-field appearance="fill" style="width: 40%">
       <mat-label>Sample Queries</mat-label>
       <mat-select [formControl]="queriesControl" [(value)]="selectedQuery" (selectionChange)="selectQueryFromDropdown()">
           <mat-option *ngFor="let queryData of queryList" [value]="queryData">{{queryData.question}}</mat-option>
