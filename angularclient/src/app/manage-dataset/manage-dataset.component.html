@@ -1,1 +1,15 @@
-<p>manage-dataset works!</p>
+<div class="upload-container">
+  <h1>Upload a File</h1>
+  <br>
+  <div>
+      <input type="file" (change)="onFileSelected($event)" multiple id="file" />
+  </div>
+  <br>
+
+  <div class="buttonRow">
+    <button mat-raised-button color="primary" (click)="onUpload()" [disabled]="!selectedFiles">Upload</button>
+    <button mat-raised-button (click)="onReset()">Reset Dataset to Default</button>
+  </div>
+
+  <p *ngIf="message">{{ message }}</p>
+</div>

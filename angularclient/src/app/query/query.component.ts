@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormControl} from "@angular/forms";
 import {MatSnackBar} from '@angular/material/snack-bar';
 import * as vkbeautify from 'vkbeautify';
 import { Pipe, PipeTransform } from "@angular/core";
+import {SharedService} from "../shared.service";
 
 @Pipe({
   name: 'xml'
@@ -19,7 +20,7 @@ export class XmlPipe implements PipeTransform {
   templateUrl: './query.component.html',
   styleUrls: ['./query.component.css']
 })
-export class QueryComponent {
+export class QueryComponent implements OnInit{
 
   str: string = "";
   queryType: string | undefined;
@@ -43,11 +44,17 @@ export class QueryComponent {
 
   queryList: QueryData[] = [];
 
-  constructor(private httpClient: HttpClient, public snackBar: MatSnackBar) {
+  dataset: string = "";
+
+  constructor(private httpClient: HttpClient, public snackBar: MatSnackBar, public sharedService: SharedService) {
     // fetch queries from queries.json to display in the "Sample Queries" dropdown
     this.httpClient.get<any>('assets/json/queries.json').subscribe((res) => {
       this.queryList = res.queryList;
     });
+  }
+
+  ngOnInit() {
+    this.dataset = this.sharedService.getFiles();
   }
 
   getOptions() {

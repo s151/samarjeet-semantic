@@ -2,7 +2,8 @@
   <h1>SPARQL Query</h1>
   <p>Please enter your SPARQL Query below</p>
 
-  <div>
+  <p>Selected Dataset: {{this.dataset}}</p>
+  <div *ngIf="this.dataset == 'Default'">
     <mat-form-field appearance="fill" style="width: 40%">
       <mat-label>Sample Queries</mat-label>
       <!--populate the queries from queries.json-->
