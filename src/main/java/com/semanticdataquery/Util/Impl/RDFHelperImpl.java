@@ -16,17 +16,26 @@ import java.util.List;
 public class RDFHelperImpl implements RDFHelper {
 
     // create model
-    static Model model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+    static Model model = null;
 
-    static {
-        // read crime RDF datasets into model
-        model.read(AppConstants.CRIME_RDF_FILE_1, "RDF/XML");
-        model.add(model.read(AppConstants.CRIME_RDF_FILE_2, "RDF/XML"));
-        // read housing OWL datasets into model
-        model.add(model.read(AppConstants.HOUSING_OWL_FILE, "RDF/XML"));
+    public void initModel(List<String> files){
+        model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+        if (files.size()>=1) {
+            model.read(files.get(0), "RDF/XML");
+            for (int i =1; i<files.size(); i++) {
+                model.add(model.read(files.get(i), "RDF/XML"));
+            }
+        }
+    }
+
+    void checkModel() {
+        if (model == null) {
+            initModel(AppConstants.DEFAULT_FILES);
+        }
     }
 
     public ResponseEntity<SelectQueryResponseDTO> processSelectQuery(String queryString) {
+        checkModel();
         SelectQueryResponseDTO responseDTO = new SelectQueryResponseDTO();
 
         Query query = QueryFactory.create(queryString);
@@ -53,6 +62,7 @@ public class RDFHelperImpl implements RDFHelper {
     }
 
     public ResponseEntity<Boolean> processAskQuery(String queryString) {
+        checkModel();
         Query query = QueryFactory.create(queryString);
         // check if the given query is of ask type, otherwise return 400
         if (!query.isAskType()) {
@@ -64,6 +74,7 @@ public class RDFHelperImpl implements RDFHelper {
     }
 
     public ResponseEntity<String> processConstructQuery(String queryString) {
+        checkModel();
         Query query = QueryFactory.create(queryString);
         // check if the given query is of construct type, otherwise return 400
         if (!query.isConstructType()) {
@@ -77,6 +88,7 @@ public class RDFHelperImpl implements RDFHelper {
     }
 
     public ResponseEntity<String> processDescribeQuery(String queryString) {
+        checkModel();
         Query query = QueryFactory.create(queryString);
         // check if the given query is of describe type, otherwise return 400
         if (!query.isDescribeType()) {

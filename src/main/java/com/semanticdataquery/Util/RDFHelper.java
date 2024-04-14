@@ -3,6 +3,8 @@ package com.semanticdataquery.Util;
 import com.semanticdataquery.DTO.SelectQueryResponseDTO;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface RDFHelper {
 
     ResponseEntity<SelectQueryResponseDTO> processSelectQuery(String queryString);
@@ -12,5 +14,7 @@ public interface RDFHelper {
     ResponseEntity<String> processConstructQuery(String queryString);
 
     ResponseEntity<String> processDescribeQuery(String queryString);
+
+    void initModel(List<String> files);
 
 }
