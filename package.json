@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@angular/cli": "^15.2.6",
+    "material-design-icons": "^3.0.1",
+    "vkbeautify": "^0.99.3"
+  },
+  "devDependencies": {
+    "@types/vkbeautify": "^0.99.2"
+  }
+}
