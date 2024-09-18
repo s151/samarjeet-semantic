@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/query")
-@CrossOrigin(origins = {"http://localhost:4200", "semantic-data-query.vercel.app"})
+@CrossOrigin(origins = {"http://localhost:4200", "https://semantic-data-query.vercel.app"})
 public class RDFController {
 
     RDFHelper rdfHelper = new RDFHelperImpl();
