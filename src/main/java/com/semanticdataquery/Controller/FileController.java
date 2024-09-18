@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/file")
-@CrossOrigin(origins = {"http://localhost:4200", "https://semantic-data-query.vercel.app"})
+@CrossOrigin(origins = "*")
 public class FileController {
 
     RDFHelper rdfHelper = new RDFHelperImpl();
