@@ -5,6 +5,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import * as vkbeautify from 'vkbeautify';
 import { Pipe, PipeTransform } from "@angular/core";
 import {SharedService} from "../shared.service";
+import {environment} from "../../environments/environment";
 
 @Pipe({
   name: 'xml'
@@ -46,6 +47,8 @@ export class QueryComponent implements OnInit{
 
   dataset: string = "";
 
+  baseUrl: string = environment.BASE_URL;
+
   constructor(private httpClient: HttpClient, public snackBar: MatSnackBar, public sharedService: SharedService) {
     // fetch queries from queries.json to display in the "Sample Queries" dropdown
     this.httpClient.get<any>('assets/json/queries.json').subscribe((res) => {
@@ -67,7 +70,7 @@ export class QueryComponent implements OnInit{
     // we don't want to make API calls when the query textbox is empty/only has spaces
     if (this.str.replaceAll(" ", "") != "") {
       // @ts-ignore
-      this.httpClient.post("http://localhost:8080/query/" + this.queryType, this.str, {responseType: this.getOptions()}).subscribe(
+      this.httpClient.post(this.baseUrl + "/query/" + this.queryType, this.str, {responseType: this.getOptions()}).subscribe(
         res => {
           this.displayQueryResponse(res);
         },
