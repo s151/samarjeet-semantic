@@ -74,7 +74,24 @@ export class QueryComponent implements OnInit{
         error => {
           // response 400 is returned when the given query and the selected queryType do not match
           // response 500 is returned when there are syntactical errors in the given query
-          let errorMessage = (error.status == '400') ? "Query and type mismatch" : "Invalid Query. Please check your SPARQL Query";
+          let errorMessage;
+          if (error.status == '0' || error.message.includes('ERR_CONNECTION_REFUSED')) {
+            errorMessage = "The service is currently unavailable. Please check your connection or try again later.";
+          } else {
+            switch (error.status) {
+              case '400':
+                errorMessage = "Query and type mismatch";
+                break;
+              case '500':
+                errorMessage = "Invalid Query. Please check your SPARQL Query";
+                break;
+              case '503':
+                errorMessage = "Service is temporarily unavailable. Please try again later.";
+                break;
+              default:
+                errorMessage = "An unexpected error occurred. Please try again.";
+            }
+          }
           this.snackBar.open(errorMessage, '', {
             duration: 3000,
             verticalPosition: "top"
