@@ -1,4 +1,4 @@
-package com.semanticdataquery.Controller;
+package com.semanticdataquery.config;
 
 import jakarta.servlet.MultipartConfigElement;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
