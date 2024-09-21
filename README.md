@@ -1,6 +1,6 @@
 ## About The Project
 
-This is the backend microservice for the search system built with Spring Boot and Apache Jena. It queries semantic datasets using SPARQL and provides the necessary API endpoints for the Angular front-end to retrieve results.
+This is the backend microservice for the search system built with Spring Boot and Apache Jena. It queries semantic datasets using SPARQL and provides the necessary API endpoints for the [Angular front-end](https://github.com/sreeharshakv/semantic-data-retrieval) to retrieve results.
 
 ## Datasets
 
