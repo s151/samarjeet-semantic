@@ -1,6 +1,6 @@
 ## About The Project
 
-Building a search system using SPARQL to retrieve results from below semantic datasets
+This is the backend microservice for the search system built with Spring Boot and Apache Jena. It queries semantic datasets using SPARQL and provides the necessary API endpoints for the Angular front-end to retrieve results.
 
 ## Datasets
 
@@ -14,22 +14,17 @@ Building a search system using SPARQL to retrieve results from below semantic da
 ## Technologies
 
 - Apache Jena
-- Angular 
 - SpringBoot
 
 
 ## Getting Started
 
-### Step 1: make sure node.js is installed and clone the repository
+### Prerequisites
+- Java 11+
+- Maven
 
-### Step 2: Perform the below commands to start the Angular webapp
+### Step 1: Clone the repository
 
-`cd angularclient`
-
-`npm install`
-
-`ng serve`
-
-### Step 3: Use below maven command to start the springboot microservive
+### Step 2: Use below maven command to start the springboot microservive
 
 `mvn spring-boot:run`
